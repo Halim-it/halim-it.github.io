@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdellaoui Halim — Technicien IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0a0d13;
+    --bg2:       #0f1420;
+    --bg3:       #141926;
+    --border:    #1e2535;
+    --blue:      #3b82f6;
+    --cyan:      #22d3ee;
+    --blue-dim:  #1d4ed8;
+    --text:      #e2e8f0;
+    --text-dim:  #8492a6;
+    --text-muted:#4a5568;
+    --accent:    #f97316;
+    --green:     #10b981;
+    --mono:      'Space Mono', monospace;
+    --display:   'Syne', sans-serif;
+    --body:      'Inter', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,13,19,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--cyan);
+    letter-spacing: 0.15em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cyan); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+    top: 50%; left: 60%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--cyan);
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+
+  h1 .name-line {
+    display: block;
+    background: linear-gradient(135deg, var(--text) 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  h1 .role-line {
+    display: block;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    max-width: 580px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.3s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.4s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--blue);
+    color: white;
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--blue-dim); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 0.85rem 1.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute;
+    right: 4rem;
+    bottom: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.5s forwards;
+  }
+
+  .stat {
+    text-align: right;
+  }
+
+  .stat-number {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 4rem;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: rgba(34,211,238,0.08);
+    border: 1px solid rgba(34,211,238,0.2);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text-dim);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .about-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .info-card:hover { border-color: var(--blue); }
+
+  .info-icon {
+    font-size: 1.2rem;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .info-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .info-value {
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── COMPETENCES ─── */
+  .skills-bg { background: var(--bg2); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-group {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .skill-group:hover {
+    border-color: rgba(59,130,246,0.4);
+    transform: translateY(-4px);
+  }
+
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .skill-group-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.15);
+    color: #93c5fd;
+    font-size: 0.82rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    margin: 0.25rem 0.25rem 0 0;
+    font-family: var(--body);
+    font-weight: 400;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .skill-tag:hover {
+    background: rgba(59,130,246,0.15);
+    border-color: rgba(59,130,246,0.35);
+  }
+
+  .skill-tag.accent {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.2);
+    color: #fb923c;
+  }
+
+  .skill-tag.green {
+    background: rgba(16,185,129,0.08);
+    border-color: rgba(16,185,129,0.2);
+    color: #34d399;
+  }
+
+  /* ─── EXPERIENCES ─── */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--cyan), var(--blue), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 3.5rem;
+    padding-left: 2.5rem;
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.5s, transform 0.5s;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.55rem;
+    top: 0.35rem;
+    width: 10px; height: 10px;
+    background: var(--blue);
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
+  }
+
+  .timeline-dot.current { background: var(--cyan); box-shadow: 0 0 0 3px rgba(34,211,238,0.3); }
+
+  .timeline-period {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-role {
+    font-family: var(--display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-context {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.8rem;
+    border-left: 2px solid var(--border);
+  }
+
+  .timeline-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .timeline-list li {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .timeline-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-size: 0.7rem;
+    top: 0.15rem;
+  }
+
+  .timeline-list li strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── PROJETS ─── */
+  .projects-bg { background: var(--bg2); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+    transform-origin: left;
+  }
+
+  .project-card:hover { border-color: rgba(59,130,246,0.3); transform: translateY(-4px); }
+  .project-card:hover::before { transform: scaleX(1); }
+
+  .project-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-family: var(--display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── CERTIFICATIONS ─── */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .cert-card:hover { border-color: var(--green); transform: translateY(-3px); }
+
+  .cert-badge {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: rgba(16,185,129,0.12);
+    border: 1px solid rgba(16,185,129,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .cert-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+
+  .cert-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-bg { background: var(--bg2); }
+
+  .contact-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-inner .section-title {
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    color: var(--text-dim);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 1rem 1.8rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: rgba(59,130,246,0.05);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-stats { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .section-header { flex-wrap: wrap; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AH<span style="color:var(--text-muted)">://</span>portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#experience">Expériences</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Disponible — Strasbourg & alentours</div>
+    <h1>
+      <span class="name-line">Abdellaoui</span>
+      <span class="name-line">Halim</span>
+      <span class="role-line" style="font-size:clamp(1.4rem,3vw,2.5rem); margin-top:0.3em;">Technicien IT · Systèmes & Réseaux</span>
+    </h1>
+    <p class="hero-desc">
+      4 ans d'expérience en support N1/N2, gestion de parc et pilotage de projets IT. En cours d'évolution vers l'administration systèmes et réseaux.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">✉ Me contacter</a>
+      <a href="#experience" class="btn-secondary">→ Voir mes expériences</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">4+</div>
+      <div class="stat-label">Années d'exp.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Projets pilotés</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">400+</div>
+      <div class="stat-label">Utilisateurs</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <span class="section-tag">01</span>
+    <h2 class="section-title">Profil</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        Technicien IT confirmé avec <strong>4 ans d'expérience</strong> acquise dans des environnements exigeants : collectivité territoriale, industrie, commerce multi-sites. J'interviens sur l'ensemble de la chaîne support, du diagnostic utilisateur jusqu'au pilotage de certains projets d'infrastructure.
+      </p>
+      <p>
+        Chez <strong>Econocom</strong> (prestation Eurométropole de Strasbourg), j'ai assuré le support d'une flotte de +400 agents, géré les incidents matériels et logiciels, et contribué au renouvellement du parc radio de la police municipale entre autres missions.
+      </p>
+      <p>
+        Chez <strong>SALPA</strong>, j'ai assuré le support pour 6 sites et une trentaine de boutiques dans toute la France, j'ai pris en charge la migration Windows 11 de bout en bout, l'intégration de nouveaux sites et la gestion de terminaux métiers dans des environnements industriels et commerciaux.
+      </p>
+      <p>
+        Mon objectif est de faire évoluer mon profil vers <strong>l'administration systèmes et réseaux</strong>, en m'appuyant sur mes compétences terrain et ma pratique de la virtualisation.
+      </p>
+    </div>
+    <div class="about-cards">
+      <div class="info-card">
+        <div class="info-icon">🎓</div>
+        <div>
+          <div class="info-label">Formation</div>
+          <div class="info-value">BTS SIO — option SISR</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Localisation</div>
+          <div class="info-value">Strasbourg (67) — Permis B</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🎯</div>
+        <div>
+          <div class="info-label">Objectif</div>
+          <div class="info-value">Administrateur Systèmes & Réseaux</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🌐</div>
+        <div>
+          <div class="info-label">Langues</div>
+          <div class="info-value">Français — Natif &nbsp;|&nbsp; Anglais — Technique</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">⚡</div>
+        <div>
+          <div class="info-label">Habilitation</div>
+          <div class="info-value">Électrique H0B0 — Travaux non électriques BT</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="skills" class="skills-bg">
+  <div class="section-header">
+    <span class="section-tag">02</span>
+    <h2 class="section-title">Compétences</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+
+    <div class="skill-group">
+      <div class="skill-group-title">🖥 Systèmes & Support</div>
+      <span class="skill-tag">Windows 10/11</span>
+      <span class="skill-tag">Microsoft 365</span>
+      <span class="skill-tag">Support N1/N2</span>
+      <span class="skill-tag">Active Directory</span>
+      <span class="skill-tag">GLPI</span>
+      <span class="skill-tag">EasyVista (ITSM)</span>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">🌐 Réseau & Infra</div>
+      <span class="skill-tag">LAN / Wi-Fi</span>
+      <span class="skill-tag">Intégration de sites</span>
+      <span class="skill-tag">Jonction domaine</span>
+      <span class="skill-tag">Configuration réseau</span>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">📱 Mobilité & MDM</div>
+      <span class="skill-tag accent">Samsung Knox</span>
+      <span class="skill-tag accent">Android Enterprise</span>
+      <span class="skill-tag accent">Fully Managed</span>
+      <span class="skill-tag accent">Work Profile</span>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">🖨 Téléphonie & Impression</div>
+      <span class="skill-tag">Téléphonie DECT</span>
+      <span class="skill-tag">Serveurs d'impression</span>
+      <span class="skill-tag">Gestion pilotes</span>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">⚙️ Virtualisation</div>
+      <span class="skill-tag green">Proxmox</span>
+      <span class="skill-tag green">VirtualBox</span>
+    </div>
+
+    <div class="skill-group">
+      <div class="skill-group-title">💻 Développement (notions)</div>
+      <span class="skill-tag">PowerShell</span>
+      <span class="skill-tag">Python</span>
+      <span class="skill-tag">HTML / CSS</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-tag">03</span>
+    <h2 class="section-title">Expériences</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-period">2024 — Présent</div>
+      <div class="timeline-role">Technicien Support IT puis Technicien Informatique</div>
+      <div class="timeline-company">SALPA · Strasbourg (67)</div>
+      <div class="timeline-context">Environnement multi-sites couvrant des périmètres bureautiques, industriels et commerciaux</div>
+      <ul class="timeline-list">
+        <li>Assurer le <strong>support utilisateurs N2</strong> (Windows 10/11, Microsoft 365) sur l'ensemble du parc informatique</li>
+        <li>Piloter de bout en bout le <strong>projet de migration Windows 11</strong> : planification, tests, déploiement et documentation</li>
+        <li>Intégrer de nouveaux sites : mise au propre du câblage réseau, jonction au domaine, installation du matériel et reprise des prestations de support externalisées</li>
+        <li>Administrer et optimiser le parc informatique via <strong>GLPI</strong> (inventaire, tickets, suivi des actifs)</li>
+        <li>Gérer la téléphonie d'entreprise (<strong>DECT</strong>) : configuration des bornes maîtres et esclaves, remplacement et dépannage</li>
+        <li>Configurer et assurer la maintenance des terminaux métiers spécialisés : PDA, scanettes</li>
+        <li>Contribuer au projet <strong>MES</strong> : préparation matérielle, réponse aux besoins et suivi</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2022 — 2024</div>
+      <div class="timeline-role">Technicien Support IT — Prestation</div>
+      <div class="timeline-company">Econocom · Eurométropole de Strasbourg (67)</div>
+      <div class="timeline-context">Mission de prestation en infogérance pour une collectivité territoriale de grande envergure (+400 agents)</div>
+      <ul class="timeline-list">
+        <li>Assurer le <strong>support utilisateurs N1/N2</strong> sur l'ensemble du parc informatique</li>
+        <li>Diagnostiquer et résoudre les incidents matériels et logiciels (Windows, Office, connectivité réseau) en respectant les <strong>SLA</strong></li>
+        <li>Déployer et configurer les équipements informatiques : postes de travail, terminaux, équipements réseau</li>
+        <li>Rédiger et mettre à jour les procédures techniques et les documentations utilisateurs</li>
+        <li>Mettre en œuvre et maintenir les solutions <strong>MDM</strong> (Samsung Knox, Android Enterprise)</li>
+        <li>Contribuer au projet de renouvellement du matériel radio de la police municipale : étude, déploiement et recette</li>
+        <li>Contribuer au projet de renouvellement du matériel dans les écoles de la collectivité de Strasbourg : préparation du matériel, mise en place et tests</li>
+        <li>Assurer le <strong>support VIP</strong> pour les élus : prise en charge prioritaire et résolution rapide</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projects" class="projects-bg">
+  <div class="section-header">
+    <span class="section-tag">04</span>
+    <h2 class="section-title">Projets Clés</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-icon">🚀</div>
+      <div class="project-title">Migration Windows 11 — Pilote de projet (environ 450 postes)</div>
+      <div class="project-desc">
+        Prise en charge complète du projet : définition du périmètre, rédaction du plan de déploiement, tests de compatibilité applicative, rollout par vagues et formation des utilisateurs finaux.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Windows 11</span>
+        <span class="project-tag">GLPI</span>
+        <span class="project-tag">Gestion de projet</span>
+        <span class="project-tag">Formation</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🏗️</div>
+      <div class="project-title">Intégration Multi-sites</div>
+      <div class="project-desc">
+        Prise en charge complète de l'intégration de nouveaux établissements : infrastructure réseau avec l'aide de l'administrateur réseau, jonction domaine, liaison compte office 365 et comptes AD (via PowerShell), déploiement matériel et transition prestataire.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Réseau LAN</span>
+        <span class="project-tag">Active Directory</span>
+        <span class="project-tag">Déploiement</span>
+        <span class="project-tag">Multi-sites</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🏭</div>
+      <div class="project-title">Projet MES — Ouverture de site industriel</div>
+      <div class="project-desc">
+        Configuration et mise en réseau de tablettes et Panel PC sur réseau industriel, installation et déploiement des pilotes d'impression sur serveur, configuration des imprimantes réseau.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Réseau industriel</span>
+        <span class="project-tag">Panel PC</span>
+        <span class="project-tag">Tablettes</span>
+        <span class="project-tag">Serveur d'impression</span>
+        <span class="project-tag">Pilotes</span>
+        <span class="project-tag">MES</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">📡</div>
+      <div class="project-title">Renouvellement Radio Police Municipale</div>
+      <div class="project-desc">
+        Participation active au remplacement de la flotte radio : analyse des besoins, échange prestataire, déploiement terrain, recette fonctionnelle et formation des utilisateurs finaux (Eurométropole de Strasbourg).
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Echange prestataire</span>
+        <span class="project-tag">Former les utilisateurs</span>
+        <span class="project-tag">Recette</span>
+        <span class="project-tag">Collectivité</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-header">
+    <span class="section-tag">05</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+
+    <div class="cert-card">
+      <div class="cert-badge">🛡️</div>
+      <div>
+        <div class="cert-name">ANSSI — SecNumAcadémie</div>
+        <div class="cert-desc">Cybersécurité des systèmes d'information</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-badge">⚖️</div>
+      <div>
+        <div class="cert-name">CNIL — MOOC RGPD</div>
+        <div class="cert-desc">Protection des données personnelles</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-badge">🏅</div>
+      <div>
+        <div class="cert-name">PIX</div>
+        <div class="cert-desc">Certification compétences numériques</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-badge">⚡</div>
+      <div>
+        <div class="cert-name">Habilitation H0B0</div>
+        <div class="cert-desc">Travaux non électriques — Basse tension</div>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <div class="cert-badge">🎓</div>
+      <div>
+        <div class="cert-name">BTS SIO — SISR</div>
+        <div class="cert-desc">Lycée René Cassin · Strasbourg · 2022</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-bg">
+  <div class="section-header">
+    <span class="section-tag">06</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-inner">
+    <p class="contact-sub">
+      Ouvert aux opportunités en administration systèmes & réseaux, support IT avancé ou gestion d'infrastructure. N'hésitez pas à me contacter.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:abdellaoui.halim2@gmail.com" class="contact-link">
+        ✉ abdellaoui.halim2@gmail.com
+      </a>
+      <a href="tel:+33767701387" class="contact-link">
+        ☎ +33 7 67 70 13 87
+      </a>
+      <a href="https://www.linkedin.com/in/halim-a-6684271a5/" target="_blank" class="contact-link">
+        🔗 LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Abdellaoui Halim · Technicien IT</div>
+  <div class="footer-copy">Strasbourg (67) · Permis B</div>
+</footer>
+
+<script>
+  // Intersection Observer for timeline animations
+  const items = document.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach(i => observer.observe(i));
+
+  // Smooth active nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let curre
